@@ -19,11 +19,12 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     public User findOne(@PathVariable("id") Long id) {
-        User user = userRepository.findOne(id);
-        if (user == null) {
-            throw new UserNotFoundException();
-        }
-        return user;
+        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+//        User user = userRepository.getOne(id);
+//        if (user == null) {
+//            throw new UserNotFoundException();
+//        }
+//        return user;
     }
 
     @PostMapping("/users")
@@ -33,6 +34,6 @@ public class UserController {
 
     @DeleteMapping("/users/{id}")
     public void delete(@PathVariable("id") Long id) {
-        userRepository.delete(id);
+        userRepository.deleteById(id);
     }
 }
