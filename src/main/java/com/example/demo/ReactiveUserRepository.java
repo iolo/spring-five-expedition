@@ -20,8 +20,8 @@ public class ReactiveUserRepository {
         return Mono.justOrEmpty(userRepository.findById(id));
     }
 
-    public Mono<User> save(User user) {
-        return Mono.justOrEmpty(userRepository.save(user));
+    public Mono<User> save(Mono<User> user) {
+        return user.flatMap(it -> Mono.justOrEmpty(userRepository.save(it)));
     }
 
     public Mono<Void> deleteById(Long id) {
